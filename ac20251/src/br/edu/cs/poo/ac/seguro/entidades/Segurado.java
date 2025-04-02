@@ -3,14 +3,18 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.math.BigDecimal;
 
-
-
 public class Segurado {
 	private String nome;
 	private Endereco endereco;
 	private LocalDate dataCriacao;
 	private BigDecimal bonus;
 	
+	public Segurado(String nome, Endereco endereco, LocalDate dataCriacao, BigDecimal bonus) {
+		this.nome = nome;
+		this.endereco = endereco;
+		this.dataCriacao = dataCriacao;
+		this.bonus = bonus;
+	}
 	
 	public String getNome() {
 		return nome;
@@ -28,23 +32,16 @@ public class Segurado {
 		this.endereco = endereco;
 	}
 	
-	protected LocalDate getdataCriacao() {
+	protected LocalDate getDataCriacao() {
 		return dataCriacao;
 	}
 	
-	protected void setdataCriacao(LocalDate dataCriacao) {
+	protected void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 	
 	public BigDecimal getbonus() {
 		return bonus;
-	}
-	
-	public Segurado(String nome, Endereco endereco, LocalDate dataCriacao, BigDecimal bonus) {
-		this.nome = nome;
-		this.endereco = endereco;
-		this.dataCriacao = dataCriacao;
-		this.bonus = bonus;
 	}
 	
 	public int getIdade() {
@@ -53,15 +50,13 @@ public class Segurado {
 	
 	public void creditarBonus(BigDecimal valor) {
         if (valor.compareTo(BigDecimal.ZERO) > 0 && this.bonus.compareTo(valor) >= 0) {
-        this.bonus = this.bonus.add(valor);
+        	this.bonus = this.bonus.add(valor);
         }
 	}
 	
 	public void debitarBonus(BigDecimal valor) {
         if (valor.compareTo(BigDecimal.ZERO) > 0 && this.bonus.compareTo(valor) >= 0) {
-        this.bonus = this.bonus.subtract(valor);
+        	this.bonus = this.bonus.subtract(valor);
         }
 	}
-	
-
 }
