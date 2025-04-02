@@ -9,9 +9,11 @@ public class PrecoAno {
 		this.ano = ano;
 		this.preco = preco;
 	}
+	
 	public int getAno() {
 		return ano;
 	}
+	
 	public double getPreco() {
 		return preco;
 	}
