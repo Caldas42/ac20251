@@ -1,7 +1,8 @@
 package br.edu.cs.poo.ac.seguro.entidades;
+
 import java.time.LocalDate;
-import java.time.Period;
 import java.math.BigDecimal;
+import java.time.Period;
 
 public class Segurado {
 	private String nome;
