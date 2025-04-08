@@ -1,5 +1,6 @@
 package br.edu.cs.poo.ac.seguro.entidades;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,9 @@ import lombok.NonNull;
 @Getter
 @Setter
 
-public class Sinistro {
+public class Sinistro implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private String numero;
 	@NonNull
 	private Veiculo veiculo;

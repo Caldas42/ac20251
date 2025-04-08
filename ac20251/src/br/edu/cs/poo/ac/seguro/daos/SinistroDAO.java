@@ -3,8 +3,8 @@ package br.edu.cs.poo.ac.seguro.daos;
 import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.edu.cs.poo.ac.seguro.entidades.Sinistro;
 
-public class SinistroDAO {
-	public SinsitroDAO() {
+public class SinistroDAO extends DAOGenerico {
+	public SinistroDAO() {
 		cadastro = new CadastroObjetos(Sinistro.class);
 	}
 	
