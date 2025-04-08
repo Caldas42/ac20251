@@ -6,7 +6,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Users/pedro/Downloads/lombok.jar">
+=======
+	<classpathentry kind="lib" path="C:/Users/Pichau/lombok.jar">
+>>>>>>> branch 'main' of https://github.com/Caldas42/ac20251.git
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

@@ -15,5 +15,3 @@ public class Veiculo {
 	private SeguradoPessoa proprietarioPessoa;
 	private CategoriaVeiculo categoria;
 }
-
-//teste
