@@ -41,5 +41,4 @@ public class SeguradoPessoaDAO extends DAOGenerico {
 			return true;
 		}
 	}
-	
 }

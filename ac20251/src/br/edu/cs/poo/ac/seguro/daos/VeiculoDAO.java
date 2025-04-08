@@ -9,7 +9,7 @@ public class VeiculoDAO {
 	}
 	
     public Veiculo buscar(String placa) {
-		return (SeguradoEmpresa)cadastro.buscar(placa);
+		return (Veiculo)cadastro.buscar(placa);
     }
     
     public boolean incluir(Veiculo veiculo) {
