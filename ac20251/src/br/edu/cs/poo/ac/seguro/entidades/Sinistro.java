@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NonNull;
 
 @RequiredArgsConstructor
 @Getter
