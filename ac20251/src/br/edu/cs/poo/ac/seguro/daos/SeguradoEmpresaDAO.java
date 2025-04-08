@@ -3,7 +3,7 @@ package br.edu.cs.poo.ac.seguro.daos;
 import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.edu.cs.poo.ac.seguro.entidades.SeguradoEmpresa;
 
-public class SeguradoEmpresaDAO {
+public class SeguradoEmpresaDAO extends DAOGenerico {
 	public SeguradoEmpresaDAO() {
 		cadastro = new CadastroObjetos(SeguradoEmpresa.class);
 	}

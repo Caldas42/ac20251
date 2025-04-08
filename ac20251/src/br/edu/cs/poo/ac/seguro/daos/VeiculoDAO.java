@@ -3,7 +3,7 @@ package br.edu.cs.poo.ac.seguro.daos;
 import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.edu.cs.poo.ac.seguro.entidades.Veiculo;
 
-public class VeiculoDAO {
+public class VeiculoDAO extends DAOGenerico {
 	public VeiculoDAO() {
 		cadastro = new CadastroObjetos(Veiculo.class);
 	}
@@ -13,19 +13,19 @@ public class VeiculoDAO {
     }
     
     public boolean incluir(Veiculo veiculo) {
-		if (buscar(segurado.getPlaca()) != null) {
+		if (buscar(veiculo.getPlaca()) != null) {
 			return false;
 		} else {
-			cadastro.incluir(segurado, segurado.getPlaca());
+			cadastro.incluir(veiculo, veiculo.getPlaca());
 			return true;
 		}    
 	}
     
     public boolean alterar(Veiculo veiculo) {
-		if (buscar(segurado.getPlaca()) == null) {
+		if (buscar(veiculo.getPlaca()) == null) {
 			return false;
 		} else {
-			cadastro.alterar(segurado, segurado.getPlaca());
+			cadastro.alterar(veiculo, veiculo.getPlaca());
 			return true;
 		} 
 	}
