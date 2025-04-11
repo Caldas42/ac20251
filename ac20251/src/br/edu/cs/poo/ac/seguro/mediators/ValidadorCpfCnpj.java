@@ -1,7 +1,5 @@
 package br.edu.cs.poo.ac.seguro.mediators;
 
-import br.edu.cs.poo.ac.seguro.mediators.StringUtils;
-
 public class ValidadorCpfCnpj {
 	public static boolean ehCnpjValido(String cnpj) {
 		if (StringUtils.ehNuloOuBranco(cnpj)) {
