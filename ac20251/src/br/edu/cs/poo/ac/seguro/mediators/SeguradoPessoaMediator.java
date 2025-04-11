@@ -4,6 +4,9 @@ import br.edu.cs.poo.ac.seguro.daos.SeguradoPessoaDAO;
 import br.edu.cs.poo.ac.seguro.entidades.SeguradoPessoa;
 
 public class SeguradoPessoaMediator {
+	private SeguradoMediator seguradoMediator;
+	private SeguradoPessoaDAO seguradoPessoaDAO;
+	
 	public String validarCpf(String cpf) {
 		return null;
 	}
