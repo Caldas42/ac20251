@@ -6,6 +6,13 @@ import br.edu.cs.poo.ac.seguro.entidades.SeguradoEmpresa;
 public class SeguradoEmpresaMediator {
 	private SeguradoMediator seguradoMediator;
 	private SeguradoEmpresaDAO seguradoEmpresaDAO;
+	private static SeguradoEmpresaMediator instancia = new SeguradoEmpresaMediator();
+
+	private SeguradoEmpresaMediator() {}
+
+	public static SeguradoEmpresaMediator getInstancia() {
+	    return instancia;
+	}
 	
 	public String validarCnpj(String cnpj) {
 		return null;
