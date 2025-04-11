@@ -29,3 +29,4 @@ public class SeguradoPessoaMediator {
 		return null;
 	}
 }
+
