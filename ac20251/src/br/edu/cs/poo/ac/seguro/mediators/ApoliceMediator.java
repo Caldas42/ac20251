@@ -25,72 +25,72 @@ public class ApoliceMediator {
 
 	private ApoliceMediator() {}
 	/*
-	 * Algumas regras de validação e lógicas devem ser inferidas através da leitura e 
-	 * do entendimento dos testes automatizados. Seguem abaixo explicações pertinentes
-	 * e necessárias ao entendimento completo de como este método deve funcionar.
+	 * Algumas regras de validaÃ§Ã£o e lÃ³gicas devem ser inferidas atravÃ©s da leitura e 
+	 * do entendimento dos testes automatizados. Seguem abaixo explicaÃ§Ãµes pertinentes
+	 * e necessÃ¡rias ao entendimento completo de como este mÃ©todo deve funcionar.
 	 * 
-	 *  Toda vez que um retorno contiver uma mensagem de erro não nula, significando
-	 *  que a apólice não foi incluída, o numero da apólice no retorno deve ser nulo.
+	 *  Toda vez que um retorno contiver uma mensagem de erro nÃ£o nula, significando
+	 *  que a apÃ³lice nÃ£o foi incluÃ­da, o numero da apÃ³lice no retorno deve ser nulo.
 	 *  
-	 *  Toda vez que um retorno contiver uma mensagem de erro não nula, significando
-	 *  que a apólice não foi incluída, o numero da apólice no retorno deve ser nulo.
+	 *  Toda vez que um retorno contiver uma mensagem de erro nÃ£o nula, significando
+	 *  que a apÃ³lice nÃ£o foi incluÃ­da, o numero da apÃ³lice no retorno deve ser nulo.
 	 *  
 	 *  Toda vez que um retorno contiver uma mensagem de erro nula, significando
-	 *  que a apólice foi incluída com sucesso, o numero da apólice no retorno deve ser 
-	 *  o número da apólice incluída.
+	 *  que a apÃ³lice foi incluÃ­da com sucesso, o numero da apÃ³lice no retorno deve ser 
+	 *  o nÃºmero da apÃ³lice incluÃ­da.
 	 * 
-	 * À clase Apolice, deve ser acrescentado (com seus respectivos get/set e presença
+	 * Ã€ clase Apolice, deve ser acrescentado (com seus respectivos get/set e presenÃ§a
 	 * dele no construtor) o atributo LocalDate dataInicioVigencia.
 	 * 
-	 * O número da apólice é igual a:
+	 * O nÃºmero da apÃ³lice Ã© igual a:
 	 * Se cpfOuCnpj de dados for um CPF
-	 *     número da apólice  = ano atual + "000" + cpfOuCnpj + placa  
+	 *     nÃºmero da apÃ³lice  = ano atual + "000" + cpfOuCnpj + placa  
 	 * Se cpfOuCnpj de dados for um CNPJ
-	 *     número da apólice  = ano atual + cpfOuCnpj + placa  
+	 *     nÃºmero da apÃ³lice  = ano atual + cpfOuCnpj + placa  
 	 *     
-	 * O valor do prêmio é calculado da seguinte forma
-	 * (A) Calcula-se VPA = (3% do valor máximo segurado) 
+	 * O valor do prÃªmio Ã© calculado da seguinte forma
+	 * (A) Calcula-se VPA = (3% do valor mÃ¡ximo segurado) 
 	 * (B) Calcula-se VPB = 1.2*VPA, se segurado for empresa e indicador de locadora
-	 *     for true; ou VPB = VPA, caso contrário.
+	 *     for true; ou VPB = VPA, caso contrÃ¡rio.
 	 * (C) Calcula-se VPC = VPB - bonus/10.
-	 * (D) Calcula-se valor do prêmio = VPC, se VPC > 0; ou valor do prêmio = 0, se 
+	 * (D) Calcula-se valor do prÃªmio = VPC, se VPC > 0; ou valor do prÃªmio = 0, se 
 	 *     VPC <=0.  
 	 *      
-	 * O valor da franquia é igual a 130% do VPB.
+	 * O valor da franquia Ã© igual a 130% do VPB.
 	 * 
-	 * Após validar a nulidade de dados e da placa, fazer a busca do veículo por placa.
-	 * Se o veículo não existir, realizar todas as valiações pertinentes
-	 * Se o veículo existir, realizar as validações de cpf/cnpj e de valor máximo, e a verificação
-	 * de apólice já existente (busca de apólice por número).
+	 * ApÃ³s validar a nulidade de dados e da placa, fazer a busca do veÃ­culo por placa.
+	 * Se o veÃ­culo nÃ£o existir, realizar todas as valiaÃ§Ãµes pertinentes
+	 * Se o veÃ­culo existir, realizar as validaÃ§Ãµes de cpf/cnpj e de valor mÃ¡ximo, e a verificaÃ§Ã£o
+	 * de apÃ³lice jÃ¡ existente (busca de apÃ³lice por nÃºmero).
 	 * 
-	 * ASSOCIAÇÂO DE VEICULO COM SEGURADOS: buscar segurado empresa por CNPJ OU segura pessoa por CPF. 
-	 * Se não for encontrado, retornar mensagem de erro, Se for encontrado, associar ao veículo. 
+	 * ASSOCIAÃ‡Ã‚O DE VEICULO COM SEGURADOS: buscar segurado empresa por CNPJ OU segura pessoa por CPF. 
+	 * Se nÃ£o for encontrado, retornar mensagem de erro, Se for encontrado, associar ao veÃ­culo. 
 	 * 
-	 * Se o veículo não existir (busca no dao de veículos por placa), ele deve ser incluído 
-	 * no dao de veículos com as informações recebidas em dados
-	 * Se o veículo existir, (busca no dao de veículos por placa), ele deve ser alterado no 
-	 * dao de veículos, mudando-se apenas os segurado empresa e segurado pessoa, cujo cpf ou 
-	 * cnpj foi recebido em dados. Estes devem ser atualizados em veículo após validações
+	 * Se o veÃ­culo nÃ£o existir (busca no dao de veÃ­culos por placa), ele deve ser incluÃ­do 
+	 * no dao de veÃ­culos com as informaÃ§Ãµes recebidas em dados
+	 * Se o veÃ­culo existir, (busca no dao de veÃ­culos por placa), ele deve ser alterado no 
+	 * dao de veÃ­culos, mudando-se apenas os segurado empresa e segurado pessoa, cujo cpf ou 
+	 * cnpj foi recebido em dados. Estes devem ser atualizados em veÃ­culo apÃ³s validaÃ§Ãµes
 	 * de cpf/cnpj e busca deles a partir dos mediators de segurado empresa e de segurado
 	 * pessoa.
 	 * 
-	 * Após todos os dados validados, e o veículo incluído ou alterado, deve-se instanciar
-	 * um objeto do tipo Apolice, e incluí-lo no dao de apolice.
+	 * ApÃ³s todos os dados validados, e o veÃ­culo incluÃ­do ou alterado, deve-se instanciar
+	 * um objeto do tipo Apolice, e incluÃ­-lo no dao de apolice.
 	 * 
-	 * Após a inclusão bem sucedida da apólice, deve-se bonficar o segurado, se for o caso. 
+	 * ApÃ³s a inclusÃ£o bem sucedida da apÃ³lice, deve-se bonficar o segurado, se for o caso. 
 	 * O segurado, pessoa ou empresa, a depender do cpf ou do cnpj recebido em dados, vai 
-	 * ter direito a crédito no bônus se seu cpf ou cnpj não tiver tido sinistro cadastrado
-	 * no ano anterior à data de início de vigência da apólice. 
-	 * Para inferir isto, deve-se usar um novo método, a ser criado no SinistroDAO, 
+	 * ter direito a crÃ©dito no bÃ´nus se seu cpf ou cnpj nÃ£o tiver tido sinistro cadastrado
+	 * no ano anterior Ã  data de inÃ­cio de vigÃªncia da apÃ³lice. 
+	 * Para inferir isto, deve-se usar um novo mÃ©todo, a ser criado no SinistroDAO, 
 	 * public Sinistro[] buscarTodos() e, com o resultado, verificar se existe pelos menos
-	 * um sinistro cujo veículo está associado ao cpf ou ao cnpj do segurado da apólice, 
-	 * e o ano da data e hora do sinistro seja igual à data de início de vigência da apólice 
-	 * menos um. Se existir, não haverá bônus. Caso contrário, deve-se acrescer 30% do valor do
-	 * prêmio da apólice ao bônus do segurado pessoa ou segurado empresa, e finalmente alterar o 
+	 * um sinistro cujo veÃ­culo estÃ¡ associado ao cpf ou ao cnpj do segurado da apÃ³lice, 
+	 * e o ano da data e hora do sinistro seja igual Ã  data de inÃ­cio de vigÃªncia da apÃ³lice 
+	 * menos um. Se existir, nÃ£o haverÃ¡ bÃ´nus. Caso contrÃ¡rio, deve-se acrescer 30% do valor do
+	 * prÃªmio da apÃ³lice ao bÃ´nus do segurado pessoa ou segurado empresa, e finalmente alterar o 
 	 * segurado pessoa ou segurado empresa no seu respectivo DAO.
 	 * 
 	 * OBS: TODOS os atributos do tipo BigDecimal devem ser gravados com 02 casas decimais (usar
-	 * o método setScale). Se isto não ocorrer, alguns testes vão quebrar.
+	 * o mÃ©todo setScale). Se isto nÃ£o ocorrer, alguns testes vÃ£o quebrar.
 	 */
 	public RetornoInclusaoApolice incluirApolice(DadosVeiculo dados) {
 		return null;
@@ -102,29 +102,29 @@ public class ApoliceMediator {
 		return null;
 	}
 	/*
-	 * A exclusão não é permitida quando: 
-	 * 1- O número for nulo ou branco.
-	 * 2- Não existir apólice com o número recebido.
+	 * A exclusÃ£o nÃ£o Ã© permitida quando: 
+	 * 1- O nÃºmero for nulo ou branco.
+	 * 2- NÃ£o existir apÃ³lice com o nÃºmero recebido.
 	 * 3- Existir sinistro cadastrado no mesmo ano 
-	 *    da apólice (comparar ano da data e hora do sinistro
-	 *    com ano da data de início de vigência da apólice) 
-	 *    para o mesmo veículo (comparar o veículo do sinistro
-	 *    com o veículo da apólice usando equals na classe veículo,
+	 *    da apÃ³lice (comparar ano da data e hora do sinistro
+	 *    com ano da data de inÃ­cio de vigÃªncia da apÃ³lice) 
+	 *    para o mesmo veÃ­culo (comparar o veÃ­culo do sinistro
+	 *    com o veÃ­culo da apÃ³lice usando equals na classe veÃ­culo,
 	 *    que deve ser implementado). Para obter os sinistros 
-	 *    cadastrados, usar o método buscarTodos do dao de sinistro, 
-	 *    implementado para contempar a questão da bonificação 
-	 *    no método de incluir apólice.
-	 *    É possível usar LOMBOK para implementação implicita do
+	 *    cadastrados, usar o mÃ©todo buscarTodos do dao de sinistro, 
+	 *    implementado para contempar a questÃ£o da bonificaÃ§Ã£o 
+	 *    no mÃ©todo de incluir apÃ³lice.
+	 *    Ã‰ possÃ­vel usar LOMBOK para implementaÃ§Ã£o implicita do
 	 *    equals na classe Veiculo.
 	 */
 	public String excluirApolice(String numero) {
 		return null;
 	}
 	/*
-	 * Daqui para baixo estão SUGESTÕES de métodos que propiciariam
-	 * mais reuso e organização de código.
-	 * Eles poderiam ser chamados pelo método de inclusão de apólice.
-	 * Mas...é apenas uma sugestão. Vocês podem fazer o código da 
+	 * Daqui para baixo estÃ£o SUGESTÃ•ES de mÃ©todos que propiciariam
+	 * mais reuso e organizaÃ§Ã£o de cÃ³digo.
+	 * Eles poderiam ser chamados pelo mÃ©todo de inclusÃ£o de apÃ³lice.
+	 * Mas...Ã© apenas uma sugestÃ£o. VocÃªs podem fazer o cÃ³digo da 
 	 * maneira que acharem pertinente. 
 	 */
 	private String validarTodosDadosVeiculo(DadosVeiculo dados) {
