@@ -16,9 +16,7 @@ public class SeguradoPessoaMediator {
 	}
 	
 	public String validarCpf(String cpf) {
-		if (StringUtils.ehNuloOuBranco(cpf)) {
-            return "CPF deve ser informado";
-        } else if (!ValidadorCpfCnpj.ehCpfValido(cpf)) {
+		if (!ValidadorCpfCnpj.ehCpfValido(cpf)) {
             return "CPF inválido";
         }
         return null;
