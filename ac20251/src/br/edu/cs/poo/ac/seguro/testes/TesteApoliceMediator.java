@@ -212,8 +212,7 @@ public class TesteApoliceMediator extends TesteMediator {
 		Veiculo vel = (Veiculo)cadVeiculo.buscar(placa);
 		Assertions.assertNotNull(vel);
 		Assertions.assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(velEsp, vel));
-		Apolice apEsp = new Apolice(numero, velEsp, new BigDecimal("2223.00"), new BigDecimal("1710.00"), 
-				new BigDecimal("57000.00"), LocalDate.now());  
+		Apolice apEsp = new Apolice(numero, velEsp, new BigDecimal("2223.00"), new BigDecimal("1710.00"), new BigDecimal("57000.00"), LocalDate.now());  
 		Apolice ap = (Apolice)cadastro.buscar(numero);
 		Assertions.assertNotNull(ap);
 		Assertions.assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(apEsp, ap));		

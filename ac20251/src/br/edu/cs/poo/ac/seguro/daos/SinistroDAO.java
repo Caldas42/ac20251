@@ -2,6 +2,7 @@ package br.edu.cs.poo.ac.seguro.daos;
 
 import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.edu.cs.poo.ac.seguro.entidades.Sinistro;
+import java.util.Arrays;
 
 public class SinistroDAO extends DAOGenerico {
 	public SinistroDAO() {
@@ -38,4 +39,9 @@ public class SinistroDAO extends DAOGenerico {
 			return true;
 		}
 	}
+	
+	public Sinistro[] buscarTodos() {
+        Object[] todos = cadastro.buscarTodos();
+        return Arrays.copyOf(todos, todos.length, Sinistro[].class);
+    }
 }

@@ -2,7 +2,8 @@ package br.edu.cs.poo.ac.seguro.mediators;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
+import java.math.RoundingMode;
+import java.util.Arrays;
 import br.edu.cs.poo.ac.seguro.daos.ApoliceDAO;
 import br.edu.cs.poo.ac.seguro.daos.SeguradoEmpresaDAO;
 import br.edu.cs.poo.ac.seguro.daos.SeguradoPessoaDAO;
@@ -17,6 +18,7 @@ import br.edu.cs.poo.ac.seguro.entidades.Sinistro;
 import br.edu.cs.poo.ac.seguro.entidades.Veiculo;
 
 public class ApoliceMediator {
+	private static ApoliceMediator instancia;
 	private SeguradoPessoaDAO daoSegPes;
 	private SeguradoEmpresaDAO daoSegEmp;
 	private VeiculoDAO daoVel;
@@ -24,116 +26,185 @@ public class ApoliceMediator {
 	private SinistroDAO daoSin;
 
 	private ApoliceMediator() {}
-	/*
-	 * Algumas regras de validação e lógicas devem ser inferidas através da leitura e 
-	 * do entendimento dos testes automatizados. Seguem abaixo explicações pertinentes
-	 * e necessárias ao entendimento completo de como este método deve funcionar.
-	 * 
-	 *  Toda vez que um retorno contiver uma mensagem de erro não nula, significando
-	 *  que a apólice não foi incluída, o numero da apólice no retorno deve ser nulo.
-	 *  
-	 *  Toda vez que um retorno contiver uma mensagem de erro não nula, significando
-	 *  que a apólice não foi incluída, o numero da apólice no retorno deve ser nulo.
-	 *  
-	 *  Toda vez que um retorno contiver uma mensagem de erro nula, significando
-	 *  que a apólice foi incluída com sucesso, o numero da apólice no retorno deve ser 
-	 *  o número da apólice incluída.
-	 * 
-	 * À clase Apolice, deve ser acrescentado (com seus respectivos get/set e presença
-	 * dele no construtor) o atributo LocalDate dataInicioVigencia.
-	 * 
-	 * O número da apólice é igual a:
-	 * Se cpfOuCnpj de dados for um CPF
-	 *     número da apólice  = ano atual + "000" + cpfOuCnpj + placa  
-	 * Se cpfOuCnpj de dados for um CNPJ
-	 *     número da apólice  = ano atual + cpfOuCnpj + placa  
-	 *     
-	 * O valor do prêmio é calculado da seguinte forma
-	 * (A) Calcula-se VPA = (3% do valor máximo segurado) 
-	 * (B) Calcula-se VPB = 1.2*VPA, se segurado for empresa e indicador de locadora
-	 *     for true; ou VPB = VPA, caso contrário.
-	 * (C) Calcula-se VPC = VPB - bonus/10.
-	 * (D) Calcula-se valor do prêmio = VPC, se VPC > 0; ou valor do prêmio = 0, se 
-	 *     VPC <=0.  
-	 *      
-	 * O valor da franquia é igual a 130% do VPB.
-	 * 
-	 * Após validar a nulidade de dados e da placa, fazer a busca do veículo por placa.
-	 * Se o veículo não existir, realizar todas as valiações pertinentes
-	 * Se o veículo existir, realizar as validações de cpf/cnpj e de valor máximo, e a verificação
-	 * de apólice já existente (busca de apólice por número).
-	 * 
-	 * ASSOCIAÇÂO DE VEICULO COM SEGURADOS: buscar segurado empresa por CNPJ OU segura pessoa por CPF. 
-	 * Se não for encontrado, retornar mensagem de erro, Se for encontrado, associar ao veículo. 
-	 * 
-	 * Se o veículo não existir (busca no dao de veículos por placa), ele deve ser incluído 
-	 * no dao de veículos com as informações recebidas em dados
-	 * Se o veículo existir, (busca no dao de veículos por placa), ele deve ser alterado no 
-	 * dao de veículos, mudando-se apenas os segurado empresa e segurado pessoa, cujo cpf ou 
-	 * cnpj foi recebido em dados. Estes devem ser atualizados em veículo após validações
-	 * de cpf/cnpj e busca deles a partir dos mediators de segurado empresa e de segurado
-	 * pessoa.
-	 * 
-	 * Após todos os dados validados, e o veículo incluído ou alterado, deve-se instanciar
-	 * um objeto do tipo Apolice, e incluí-lo no dao de apolice.
-	 * 
-	 * Após a inclusão bem sucedida da apólice, deve-se bonficar o segurado, se for o caso. 
-	 * O segurado, pessoa ou empresa, a depender do cpf ou do cnpj recebido em dados, vai 
-	 * ter direito a crédito no bônus se seu cpf ou cnpj não tiver tido sinistro cadastrado
-	 * no ano anterior à data de início de vigência da apólice. 
-	 * Para inferir isto, deve-se usar um novo método, a ser criado no SinistroDAO, 
-	 * public Sinistro[] buscarTodos() e, com o resultado, verificar se existe pelos menos
-	 * um sinistro cujo veículo está associado ao cpf ou ao cnpj do segurado da apólice, 
-	 * e o ano da data e hora do sinistro seja igual à data de início de vigência da apólice 
-	 * menos um. Se existir, não haverá bônus. Caso contrário, deve-se acrescer 30% do valor do
-	 * prêmio da apólice ao bônus do segurado pessoa ou segurado empresa, e finalmente alterar o 
-	 * segurado pessoa ou segurado empresa no seu respectivo DAO.
-	 * 
-	 * OBS: TODOS os atributos do tipo BigDecimal devem ser gravados com 02 casas decimais (usar
-	 * o método setScale). Se isto não ocorrer, alguns testes vão quebrar.
-	 */
+	
+	public static ApoliceMediator getInstancia() {
+        if (instancia == null) {
+            instancia = new ApoliceMediator();
+        }
+        return instancia;
+    }
+
 	public RetornoInclusaoApolice incluirApolice(DadosVeiculo dados) {
-		return null;
-	}
-	/*
-	 * Ver os testes test19 e test20
-	 */
-	public Apolice buscarApolice(String numero) {
-		return null;
-	}
-	/*
-	 * A exclusão não é permitida quando: 
-	 * 1- O número for nulo ou branco.
-	 * 2- Não existir apólice com o número recebido.
-	 * 3- Existir sinistro cadastrado no mesmo ano 
-	 *    da apólice (comparar ano da data e hora do sinistro
-	 *    com ano da data de início de vigência da apólice) 
-	 *    para o mesmo veículo (comparar o veículo do sinistro
-	 *    com o veículo da apólice usando equals na classe veículo,
-	 *    que deve ser implementado). Para obter os sinistros 
-	 *    cadastrados, usar o método buscarTodos do dao de sinistro, 
-	 *    implementado para contempar a questão da bonificação 
-	 *    no método de incluir apólice.
-	 *    É possível usar LOMBOK para implementação implicita do
-	 *    equals na classe Veiculo.
-	 */
-	public String excluirApolice(String numero) {
-		return null;
-	}
-	/*
-	 * Daqui para baixo estão SUGESTÕES de métodos que propiciariam
-	 * mais reuso e organização de código.
-	 * Eles poderiam ser chamados pelo método de inclusão de apólice.
-	 * Mas...é apenas uma sugestão. Vocês podem fazer o código da 
-	 * maneira que acharem pertinente. 
-	 */
-	private String validarTodosDadosVeiculo(DadosVeiculo dados) {
-		return null;
-	}
-	private String validarCpfCnpjValorMaximo(DadosVeiculo dados) {
-		return null;
-	}
-	private BigDecimal obterValorMaximoPermitido(int ano, int codigoCat) {
-		return null;
-	}
+        String erro = validarTodosDadosVeiculo(dados);
+        if (erro != null) {
+            return new RetornoInclusaoApolice(null, erro);
+        }
+        erro = validarCpfCnpjValorMaximo(dados);
+        if (erro != null) {
+            return new RetornoInclusaoApolice(null, erro);
+        }
+        String cpfOuCnpj = dados.getCpfOuCnpj().trim();
+        boolean isCpf = cpfOuCnpj.length() == 11;
+        SeguradoPessoa segPes = null;
+        SeguradoEmpresa segEmp = null;
+        if (isCpf) {
+            segPes = daoSegPes.buscar(cpfOuCnpj);
+            if (segPes == null) {
+                return new RetornoInclusaoApolice(null, "CPF inexistente no cadastro de pessoas");
+            }
+        } else {
+            segEmp = daoSegEmp.buscar(cpfOuCnpj);
+            if (segEmp == null) {
+                return new RetornoInclusaoApolice(null, "CNPJ inexistente no cadastro de empresas");
+            }
+        }
+        String placa = dados.getPlaca().trim();
+        Veiculo veiculo = daoVel.buscar(placa);
+        CategoriaVeiculo categoria = CategoriaVeiculo.values()[dados.getCodigoCategoria()];
+        if (veiculo == null) {
+            veiculo = new Veiculo(placa, dados.getAno(), segEmp, segPes, categoria);
+            daoVel.incluir(veiculo);
+        } else {
+            veiculo.setProprietarioEmpresa(segEmp);
+            veiculo.setProprietarioPessoa(segPes);
+            daoVel.alterar(veiculo);
+        }
+        int anoAtual = LocalDate.now().getYear();
+        String numero;
+        if (isCpf) {
+            numero = anoAtual + "000" + cpfOuCnpj + placa;
+        } else {
+            numero = anoAtual + cpfOuCnpj + placa;
+        }
+        if (daoApo.buscar(numero) != null) {
+            return new RetornoInclusaoApolice(null, "Apólice já existente para ano atual e veículo");
+        }
+ 
+        BigDecimal vpa = dados.getValorMaximoSegurado()
+                .multiply(new BigDecimal("0.03"))
+                .setScale(2, RoundingMode.HALF_UP);
+        boolean isEmpresa = !isCpf;
+        BigDecimal vpb = (isEmpresa && segEmp.isEhLocadoraDeVeiculos())
+                ? vpa.multiply(new BigDecimal("1.2")).setScale(2, RoundingMode.HALF_UP)
+                : vpa;
+        BigDecimal bonusAtual = isCpf ? segPes.getBonus() : segEmp.getBonus();
+        BigDecimal vpc = vpb.subtract(bonusAtual.divide(new BigDecimal("10"), 2, RoundingMode.HALF_UP))
+                .setScale(2, RoundingMode.HALF_UP);
+        BigDecimal premio = vpc.compareTo(BigDecimal.ZERO) > 0 ? vpc : BigDecimal.ZERO;
+        BigDecimal franquia = vpb.multiply(new BigDecimal("1.3"))
+                .setScale(2, RoundingMode.HALF_UP);
+        Apolice ap = new Apolice(numero, veiculo, franquia, premio, dados.getValorMaximoSegurado(), LocalDate.now());
+        daoApo.incluir(ap);
+        Sinistro[] sinistros = daoSin.buscarTodos();
+        boolean possuiSinistroAnoAnterior = Arrays.stream(sinistros)
+                .anyMatch(s -> s.getVeiculo().equals(veiculo)
+                        && s.getDataHoraSinistro().getYear() == (ap.getDataInicioVigencia().getYear() - 1));
+        if (!possuiSinistroAnoAnterior) {
+            BigDecimal incremento = premio.multiply(new BigDecimal("0.3"))
+                    .setScale(2, RoundingMode.HALF_UP);
+            BigDecimal novoBonus = bonusAtual.add(incremento).setScale(2, RoundingMode.HALF_UP);
+
+            if (isCpf) {
+                segPes = new SeguradoPessoa(
+                    segPes.getNome(),
+                    segPes.getEndereco(),
+                    segPes.getDataNascimento(),
+                    novoBonus,
+                    segPes.getCpf(),
+                    segPes.getRenda()
+                );
+                daoSegPes.alterar(segPes);
+            } else {
+                segEmp = new SeguradoEmpresa(
+                    segEmp.getNome(),
+                    segEmp.getEndereco(),
+                    segEmp.getDataAbertura(),
+                    novoBonus,
+                    segEmp.getCnpj(),
+                    segEmp.getFaturamento(),
+                    segEmp.isEhLocadoraDeVeiculos()
+                );
+                daoSegEmp.alterar(segEmp);
+            }
+        }
+        return new RetornoInclusaoApolice(numero, null);
+    }
+
+    public Apolice buscarApolice(String numero) {
+        if (numero == null || numero.trim().isEmpty()) {
+            return null;
+        }
+        return daoApo.buscar(numero);
+    }
+
+    public String excluirApolice(String numero) {
+        if (numero == null || numero.trim().isEmpty()) {
+            return "Número deve ser informado";
+        }
+        Apolice ap = daoApo.buscar(numero);
+        if (ap == null) {
+            return "Apólice inexistente";
+        }
+        Sinistro[] sinistros = daoSin.buscarTodos();
+        boolean bloqueia = Arrays.stream(sinistros)
+                .anyMatch(s -> s.getVeiculo().equals(ap.getVeiculo())
+                        && s.getDataHoraSinistro().getYear() == ap.getDataInicioVigencia().getYear());
+        if (bloqueia) {
+            return "Existe sinistro cadastrado para o veículo em questão "
+                    + "e no mesmo ano da apólice";
+        }
+        daoApo.excluir(numero);
+        return null;
+    }
+
+    private String validarTodosDadosVeiculo(DadosVeiculo dados) {
+        if (dados == null) {
+            return "Dados do veículo devem ser informados";
+        }
+        if (dados.getCpfOuCnpj() == null || dados.getCpfOuCnpj().trim().isEmpty()) {
+            return "CPF ou CNPJ deve ser informado";
+        }
+        String id = dados.getCpfOuCnpj().trim();
+        if (!(id.matches("\\d{11}") || id.matches("\\d{14}"))) {
+            return id.length() == 11 ? "CPF inválido" : "CNPJ inválido";
+        }
+        if (dados.getPlaca() == null || dados.getPlaca().trim().isEmpty()) {
+            return "Placa do veículo deve ser informada";
+        }
+        int ano = dados.getAno();
+        int atual = LocalDate.now().getYear();
+        if (ano < 2020 || ano > atual) {
+            return "Ano tem que estar entre 2020 e " + atual + ", incluindo estes";
+        }
+        if (dados.getValorMaximoSegurado() == null) {
+            return "Valor máximo segurado deve ser informado";
+        }
+        int codCat = dados.getCodigoCategoria();
+        CategoriaVeiculo[] cats = CategoriaVeiculo.values();
+        if (codCat < 0 || codCat >= cats.length) {
+            return "Categoria inválida";
+        }
+        return null;
+    }
+
+    private String validarCpfCnpjValorMaximo(DadosVeiculo dados) {
+        BigDecimal valor = dados.getValorMaximoSegurado();
+        BigDecimal ref = obterValorMaximoPermitido(dados.getAno(), dados.getCodigoCategoria());
+        BigDecimal min = ref.multiply(new BigDecimal("0.75")).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal max = ref.setScale(2, RoundingMode.HALF_UP);
+        if (valor.compareTo(min) < 0 || valor.compareTo(max) > 0) {
+            return "Valor máximo segurado deve estar entre 75% e 100% do valor do carro encontrado na categoria";
+        }
+        return null;
+    }
+
+    private BigDecimal obterValorMaximoPermitido(int ano, int codigoCat) {
+        CategoriaVeiculo cat = CategoriaVeiculo.values()[codigoCat];
+        for (PrecoAno pa : cat.getPrecosAnos()) {
+            if (pa.getAno() == ano) {
+                return BigDecimal.valueOf(pa.getPreco()).setScale(2, RoundingMode.HALF_UP);
+            }
+        }
+        return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+    }
 }

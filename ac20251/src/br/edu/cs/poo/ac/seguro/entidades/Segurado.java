@@ -44,7 +44,7 @@ public class Segurado implements Serializable {
 		this.dataCriacao = dataCriacao;
 	}
 	
-	public BigDecimal getbonus() {
+	public BigDecimal getBonus() {
 		return bonus;
 	}
 	

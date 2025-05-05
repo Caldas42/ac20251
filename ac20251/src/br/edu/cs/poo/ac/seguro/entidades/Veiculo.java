@@ -2,9 +2,12 @@ package br.edu.cs.poo.ac.seguro.entidades;
 
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+
+@EqualsAndHashCode(of = {"placa", "ano"})
 @AllArgsConstructor
 @Getter
 @Setter
